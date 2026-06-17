@@ -1,6 +1,16 @@
 import logo from '../assets/logo.png'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 function Dashboard() {
+  const [angajati, setAngajati] = useState([])
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/employees')
+      .then(res => setAngajati(res.data))
+      .catch(err => console.error(err))
+  }, [])
+
   return (
     <div className="min-h-screen flex" style={{backgroundColor: '#fff8f9'}}>
       
@@ -34,7 +44,7 @@ function Dashboard() {
         {/* Carduri statistici */}
         <div className="grid grid-cols-4 gap-4 mb-8">
           {[
-            { label: 'Angajati activi', value: '12' },
+            { label: 'Angajati activi', value: angajati.length },
             { label: 'Prezenti azi', value: '8' },
             { label: 'Cereri concediu', value: '2' },
             { label: 'Candidati noi', value: '3' },
@@ -46,10 +56,10 @@ function Dashboard() {
           ))}
         </div>
 
-        {/* Tabel angajati recenti */}
+        {/* Tabel angajati din API */}
         <div className="bg-white rounded-2xl shadow-sm p-6">
           <h2 className="text-lg font-bold mb-4" style={{color: '#3d1f28'}}>
-            Angajati recenti
+            Angajati
           </h2>
           <table className="w-full text-sm">
             <thead>
@@ -60,21 +70,14 @@ function Dashboard() {
               </tr>
             </thead>
             <tbody>
-              {[
-                { nume: 'Ana Popescu', rol: 'Terapeut', status: 'Prezent' },
-                { nume: 'Maria Ion', rol: 'Coafor', status: 'Prezent' },
-                { nume: 'Elena Radu', rol: 'Receptioner', status: 'Absent' },
-              ].map((row) => (
-                <tr key={row.nume} className="border-t" style={{borderColor: '#fff0f3'}}>
-                  <td className="py-3 font-medium" style={{color: '#3d1f28'}}>{row.nume}</td>
-                  <td className="py-3" style={{color: '#7a5c63'}}>{row.rol}</td>
+              {angajati.map((a) => (
+                <tr key={a.id} className="border-t" style={{borderColor: '#fff0f3'}}>
+                  <td className="py-3 font-medium" style={{color: '#3d1f28'}}>{a.nume}</td>
+                  <td className="py-3" style={{color: '#7a5c63'}}>{a.rol}</td>
                   <td className="py-3">
                     <span className="px-3 py-1 rounded-full text-xs font-medium"
-                      style={{
-                        backgroundColor: row.status === 'Prezent' ? '#d5f5e3' : '#fdebd0',
-                        color: row.status === 'Prezent' ? '#1e8449' : '#d35400'
-                      }}>
-                      {row.status}
+                      style={{backgroundColor: '#d5f5e3', color: '#1e8449'}}>
+                      {a.status}
                     </span>
                   </td>
                 </tr>
