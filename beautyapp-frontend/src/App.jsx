@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import Login from './pages/Login'
 import Angajati from './pages/Angajati'
+import Concedii from './pages/Concedii'
 import logo from './assets/logo.png'
 
 const menuItems = [
@@ -20,8 +21,7 @@ function Layout({ children }) {
 
   return (
     <div className="min-h-screen flex" style={{backgroundColor: '#fff8f9'}}>
-      {/* Sidebar */}
-      <div className="w-64 min-h-screen flex flex-col py-8 px-4" style={{backgroundColor: '#ffcad4'}}>
+      <div className="min-h-screen flex flex-col py-8 px-4" style={{backgroundColor: '#ffcad4', width: '256px', flexShrink: 0}}>
         <div className="flex justify-center mb-10">
           <img src={logo} alt="BeautyApp" className="w-20" />
         </div>
@@ -41,8 +41,6 @@ function Layout({ children }) {
           ))}
         </nav>
       </div>
-
-      {/* Continut */}
       <div className="flex-1">
         {children}
       </div>
@@ -66,6 +64,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
         <Route path="/angajati" element={<Layout><Angajati /></Layout>} />
+        <Route path="/concedii" element={<Layout><Concedii /></Layout>} />
       </Routes>
     </BrowserRouter>
   )
