@@ -7,6 +7,7 @@ import Candidati from './pages/Candidati'
 import Prezenta from './pages/Prezenta'
 import Departamente from './pages/Departamente'
 import Dashboard from './pages/Dashboard'
+import Setari from './pages/Setari'
 import logo from './assets/logo.png'
 
 
@@ -66,6 +67,7 @@ function App() {
         <Route path="/candidati" element={<Layout><Candidati /></Layout>} />
         <Route path="/prezenta" element={<Layout><Prezenta /></Layout>} />
         <Route path="/departamente" element={<Layout><Departamente /></Layout>} />
+        <Route path="/setari" element={<Layout><Setari /></Layout>} />
 
       </Routes>
     </BrowserRouter>
