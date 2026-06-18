@@ -1,1 +1,43 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@theme {
+  --color-primary: #ffcad4;
+  --color-primary-dark: #e8889a;
+  --color-primary-light: #fff0f3;
+  --color-accent: #c9748a;
+  --color-accent-dark: #a85570;
+  --color-text-dark: #3d1f28;
+  --color-text-gray: #7a5c63;
+  --color-bg: #fff8f9;
+}
+
+* {
+  transition: all 0.2s ease;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #fff8f9;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff0f3;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffcad4;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c9748a;
+}

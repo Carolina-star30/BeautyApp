@@ -1,13 +1,33 @@
 import { useNavigate } from 'react-router-dom'
+import { Users, Clock, Calendar, UserPlus, TrendingUp, Award } from 'lucide-react'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts'
+
+const dataGrafic = [
+  { luna: 'Ian', prezenti: 10, absenti: 2 },
+  { luna: 'Feb', prezenti: 11, absenti: 1 },
+  { luna: 'Mar', prezenti: 9, absenti: 3 },
+  { luna: 'Apr', prezenti: 12, absenti: 0 },
+  { luna: 'Mai', prezenti: 10, absenti: 2 },
+  { luna: 'Iun', prezenti: 11, absenti: 1 },
+]
+
+const dataSalarii = [
+  { luna: 'Ian', total: 28000 },
+  { luna: 'Feb', total: 29500 },
+  { luna: 'Mar', total: 27800 },
+  { luna: 'Apr', total: 31000 },
+  { luna: 'Mai', total: 30500 },
+  { luna: 'Iun', total: 32000 },
+]
 
 function Dashboard() {
   const navigate = useNavigate()
 
   const stats = [
-    { label: 'Angajati activi', value: '11', color: '#c9748a', path: '/angajati' },
-    { label: 'Prezenti azi', value: '8', color: '#1e8449', path: '/prezenta' },
-    { label: 'Cereri concediu', value: '2', color: '#2471a3', path: '/concedii' },
-    { label: 'Candidati noi', value: '4', color: '#d35400', path: '/candidati' },
+    { label: 'Angajati activi', value: '11', icon: Users, color: '#c9748a', path: '/angajati' },
+    { label: 'Prezenti azi', value: '8', icon: Clock, color: '#1e8449', path: '/prezenta' },
+    { label: 'Cereri concediu', value: '2', icon: Calendar, color: '#2471a3', path: '/concedii' },
+    { label: 'Candidati noi', value: '4', icon: UserPlus, color: '#d35400', path: '/candidati' },
   ]
 
   const activitati = [
@@ -18,95 +38,110 @@ function Dashboard() {
     { text: 'Departamentul Cosmetica a fost actualizat', timp: 'ieri', icon: '🏢' },
   ]
 
-  const angajatiRecenti = [
-    { nume: 'Ana Popescu', rol: 'Terapeut', status: 'prezent' },
-    { nume: 'Maria Ion', rol: 'Coafor', status: 'prezent' },
-    { nume: 'Elena Radu', rol: 'Receptioner', status: 'absent' },
-  ]
-
   return (
     <div className="p-8">
+      {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{color: '#3d1f28'}}>
+        <h1 className="text-3xl font-bold mb-1" style={{color: '#3d1f28'}}>
           Buna ziua! 👋
         </h1>
-        <p className="text-sm mt-1" style={{color: '#7a5c63'}}>
-          Iata un sumar al activitatii salonului tau — {new Date().toLocaleDateString('ro-RO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+        <p className="text-sm" style={{color: '#7a5c63'}}>
+          {new Date().toLocaleDateString('ro-RO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
         </p>
       </div>
 
       {/* Carduri statistici */}
       <div className="grid grid-cols-4 gap-4 mb-8">
-        {stats.map((s) => (
-          <div
-            key={s.label}
-            onClick={() => navigate(s.path)}
-            className="bg-white rounded-2xl p-6 shadow-sm cursor-pointer hover:shadow-md transition-all"
-          >
-            <p className="text-sm mb-1" style={{color: '#7a5c63'}}>{s.label}</p>
-            <p className="text-3xl font-bold" style={{color: s.color}}>{s.value}</p>
-          </div>
-        ))}
+        {stats.map((s) => {
+          const Icon = s.icon
+          return (
+            <div
+              key={s.label}
+              onClick={() => navigate(s.path)}
+              className="bg-white rounded-2xl p-6 cursor-pointer"
+              style={{boxShadow: '0 4px 20px rgba(201, 116, 138, 0.1)'}}
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div className="p-2 rounded-xl" style={{backgroundColor: s.color + '20'}}>
+                  <Icon size={20} style={{color: s.color}} />
+                </div>
+                <TrendingUp size={14} style={{color: '#1e8449'}} />
+              </div>
+              <p className="text-3xl font-bold mb-1" style={{color: s.color}}>{s.value}</p>
+              <p className="text-sm" style={{color: '#7a5c63'}}>{s.label}</p>
+            </div>
+          )
+        })}
       </div>
 
-      <div className="grid grid-cols-2 gap-6">
+      {/* Grafice */}
+      <div className="grid grid-cols-2 gap-6 mb-6">
 
-        {/* Angajati recenti */}
-        <div className="bg-white rounded-2xl shadow-sm p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="font-bold text-lg" style={{color: '#3d1f28'}}>Angajati</h2>
-            <button
-              onClick={() => navigate('/angajati')}
-              className="text-xs px-3 py-1 rounded-lg"
-              style={{backgroundColor: '#fff0f3', color: '#c9748a'}}
-            >
-              Vezi toti
-            </button>
-          </div>
-          <table className="w-full text-sm">
-            <thead>
-              <tr style={{color: '#7a5c63'}}>
-                <th className="text-left py-2">Nume</th>
-                <th className="text-left py-2">Rol</th>
-                <th className="text-left py-2">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {angajatiRecenti.map((a) => (
-                <tr key={a.nume} className="border-t" style={{borderColor: '#fff0f3'}}>
-                  <td className="py-3 font-medium" style={{color: '#3d1f28'}}>{a.nume}</td>
-                  <td className="py-3" style={{color: '#7a5c63'}}>{a.rol}</td>
-                  <td className="py-3">
-                    <span className="px-3 py-1 rounded-full text-xs font-medium"
-                      style={{
-                        backgroundColor: a.status === 'prezent' ? '#d5f5e3' : '#fdebd0',
-                        color: a.status === 'prezent' ? '#1e8449' : '#d35400'
-                      }}>
-                      {a.status}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        {/* Grafic prezenta */}
+        <div className="bg-white rounded-2xl p-6" style={{boxShadow: '0 4px 20px rgba(201, 116, 138, 0.1)'}}>
+          <h2 className="text-lg font-bold mb-6" style={{color: '#3d1f28'}}>
+            Evolutia prezentei (6 luni)
+          </h2>
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={dataGrafic}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#fff0f3" />
+              <XAxis dataKey="luna" tick={{fontSize: 12, fill: '#7a5c63'}} />
+              <YAxis tick={{fontSize: 12, fill: '#7a5c63'}} />
+              <Tooltip
+                contentStyle={{borderRadius: '12px', border: '1px solid #ffcad4'}}
+              />
+              <Bar dataKey="prezenti" fill="#ffcad4" radius={[6,6,0,0]} name="Prezenti" />
+              <Bar dataKey="absenti" fill="#fdebd0" radius={[6,6,0,0]} name="Absenti" />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
 
-        {/* Activitate recenta */}
-        <div className="bg-white rounded-2xl shadow-sm p-6">
-          <h2 className="font-bold text-lg mb-4" style={{color: '#3d1f28'}}>Activitate recenta</h2>
-          <div className="flex flex-col gap-3">
-            {activitati.map((a, i) => (
-              <div key={i} className="flex items-start gap-3 pb-3" style={{borderBottom: '1px solid #fff0f3'}}>
-                <span className="text-xl">{a.icon}</span>
-                <div>
-                  <p className="text-sm" style={{color: '#3d1f28'}}>{a.text}</p>
-                  <p className="text-xs mt-1" style={{color: '#7a5c63'}}>{a.timp}</p>
-                </div>
+        {/* Grafic salarii */}
+        <div className="bg-white rounded-2xl p-6" style={{boxShadow: '0 4px 20px rgba(201, 116, 138, 0.1)'}}>
+          <h2 className="text-lg font-bold mb-6" style={{color: '#3d1f28'}}>
+            Evolutia costurilor salariale (RON)
+          </h2>
+          <ResponsiveContainer width="100%" height={200}>
+            <LineChart data={dataSalarii}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#fff0f3" />
+              <XAxis dataKey="luna" tick={{fontSize: 12, fill: '#7a5c63'}} />
+              <YAxis tick={{fontSize: 12, fill: '#7a5c63'}} />
+              <Tooltip
+                contentStyle={{borderRadius: '12px', border: '1px solid #ffcad4'}}
+                formatter={(value) => [`${value} RON`, 'Total salarii']}
+              />
+              <Line
+                type="monotone"
+                dataKey="total"
+                stroke="#c9748a"
+                strokeWidth={3}
+                dot={{fill: '#c9748a', r: 5}}
+                activeDot={{r: 7}}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+
+      </div>
+
+      {/* Activitate recenta */}
+      <div className="bg-white rounded-2xl p-6" style={{boxShadow: '0 4px 20px rgba(201, 116, 138, 0.1)'}}>
+        <div className="flex items-center gap-2 mb-6">
+          <Award size={20} style={{color: '#c9748a'}} />
+          <h2 className="text-lg font-bold" style={{color: '#3d1f28'}}>Activitate recenta</h2>
+        </div>
+        <div className="flex flex-col gap-4">
+          {activitati.map((a, i) => (
+            <div key={i} className="flex items-start gap-4 pb-4" 
+              style={{borderBottom: i < activitati.length - 1 ? '1px solid #fff0f3' : 'none'}}>
+              <span className="text-xl">{a.icon}</span>
+              <div className="flex-1">
+                <p className="text-sm font-medium" style={{color: '#3d1f28'}}>{a.text}</p>
+                <p className="text-xs mt-1" style={{color: '#7a5c63'}}>{a.timp}</p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-
       </div>
     </div>
   )
