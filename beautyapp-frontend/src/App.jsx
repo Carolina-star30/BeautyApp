@@ -2,7 +2,13 @@ import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-ro
 import Login from './pages/Login'
 import Angajati from './pages/Angajati'
 import Concedii from './pages/Concedii'
+import Salarizare from './pages/Salarizare'
+import Candidati from './pages/Candidati'
+import Prezenta from './pages/Prezenta'
+import Departamente from './pages/Departamente'
+import Dashboard from './pages/Dashboard'
 import logo from './assets/logo.png'
+
 
 const menuItems = [
   { label: 'Dashboard', path: '/dashboard' },
@@ -48,15 +54,6 @@ function Layout({ children }) {
   )
 }
 
-function Dashboard() {
-  return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-2" style={{color: '#3d1f28'}}>Buna ziua! 👋</h1>
-      <p style={{color: '#7a5c63'}}>Iata un sumar al activitatii salonului tau</p>
-    </div>
-  )
-}
-
 function App() {
   return (
     <BrowserRouter>
@@ -65,6 +62,11 @@ function App() {
         <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
         <Route path="/angajati" element={<Layout><Angajati /></Layout>} />
         <Route path="/concedii" element={<Layout><Concedii /></Layout>} />
+        <Route path="/salarizare" element={<Layout><Salarizare /></Layout>} />
+        <Route path="/candidati" element={<Layout><Candidati /></Layout>} />
+        <Route path="/prezenta" element={<Layout><Prezenta /></Layout>} />
+        <Route path="/departamente" element={<Layout><Departamente /></Layout>} />
+
       </Routes>
     </BrowserRouter>
   )
