@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 require('dotenv').config()
 
+const { connectDB } = require('./src/database')
 const employeesRoute = require('./src/routes/employees')
 
 const app = express()
@@ -16,6 +17,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/employees', employeesRoute)
+
+connectDB()
 
 app.listen(PORT, () => {
   console.log(`Server pornit pe portul ${PORT}`)
