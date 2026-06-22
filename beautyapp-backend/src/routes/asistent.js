@@ -25,7 +25,7 @@ Datele angajatului:
 Raspunde scurt si la obiect, maxim 3 propozitii.`
 
     const response = await groq.chat.completions.create({
-      model: 'llama3-8b-8192',
+      model: 'llama-3.1-8b-instant',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: intrebare }
