@@ -4,6 +4,7 @@ require('dotenv').config()
 
 const { connectDB } = require('./src/database')
 const employeesRoute = require('./src/routes/employees')
+const asistentRoute = require('./src/routes/asistent')
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -17,6 +18,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/employees', employeesRoute)
+app.use('/api/asistent', asistentRoute)
 
 connectDB()
 
