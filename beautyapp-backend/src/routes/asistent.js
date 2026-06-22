@@ -8,9 +8,12 @@ router.post('/', async (req, res) => {
   try {
     const { intrebare, dateAngajat } = req.body
 
+    console.log('Intrebare primita:', intrebare)
+    console.log('GROQ_API_KEY exists:', !!process.env.GROQ_API_KEY)
+
     const systemPrompt = `Esti un asistent HR pentru salonul de infrumusetare BeautyApp.
 Raspunzi EXCLUSIV in limba romana, politicos si concis.
-Nu raspunzi la intrebari care nu sunt legate de activitatea salonului sau de datele angajatului.
+Daca intrebarea nu este legata de activitatea salonului, explica politicos ca poti ajuta doar cu informatii HR.
 
 Datele angajatului:
 - Nume: ${dateAngajat?.nume || 'Angajat'}
@@ -31,9 +34,16 @@ Raspunde scurt si la obiect, maxim 3 propozitii.`
       temperature: 0.7
     })
 
+    console.log('Raspuns Groq:', response.choices[0].message.content)
     res.json({ raspuns: response.choices[0].message.content })
+
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    console.error('GROQ ERROR:', err.message)
+    console.error('GROQ ERROR DETAILS:', err)
+    res.status(500).json({ 
+      error: err.message,
+      details: err.toString()
+    })
   }
 })
 
