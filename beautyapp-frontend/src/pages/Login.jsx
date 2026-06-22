@@ -2,19 +2,31 @@ import logo from '../assets/logo.png'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
 
 function Login() {
   const navigate = useNavigate()
+  const { login } = useAuth()
   const [email, setEmail] = useState('')
   const [parola, setParola] = useState('')
   const [showParola, setShowParola] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [eroare, setEroare] = useState('')
 
   const handleLogin = () => {
     if (email && parola) {
       setLoading(true)
+      setEroare('')
+      const rol = login(email, parola)
       setTimeout(() => {
-        navigate('/dashboard')
+        if (rol === 'admin') {
+          navigate('/dashboard')
+        } else if (rol === 'angajat') {
+          navigate('/portal')
+        } else {
+          setLoading(false)
+          setEroare('Email sau parola incorecta!')
+        }
       }, 1000)
     }
   }
@@ -22,7 +34,6 @@ function Login() {
   return (
     <div className="min-h-screen flex" style={{background: 'linear-gradient(135deg, #fff0f3 0%, #ffcad4 50%, #f4a0b0 100%)'}}>
       
-      {/* Stanga - branding */}
       <div className="hidden lg:flex flex-1 flex-col items-center justify-center p-12">
         <img src={logo} alt="BeautyApp" className="w-48 mb-8 drop-shadow-xl" />
         <h1 className="text-4xl font-bold text-center mb-4" style={{color: '#3d1f28'}}>
@@ -44,7 +55,6 @@ function Login() {
         </div>
       </div>
 
-      {/* Dreapta - formular */}
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="bg-white rounded-3xl p-10 w-full max-w-md"
           style={{boxShadow: '0 20px 60px rgba(201, 116, 138, 0.2)'}}>
@@ -61,7 +71,6 @@ function Login() {
           </p>
 
           <div className="flex flex-col gap-4">
-            {/* Email */}
             <div>
               <label className="text-xs font-medium mb-2 block" style={{color: '#7a5c63'}}>
                 Email
@@ -78,11 +87,11 @@ function Login() {
                   style={{border: '1.5px solid #ffcad4', color: '#3d1f28'}}
                   onFocus={e => e.target.style.borderColor = '#c9748a'}
                   onBlur={e => e.target.style.borderColor = '#ffcad4'}
+                  onKeyDown={e => e.key === 'Enter' && handleLogin()}
                 />
               </div>
             </div>
 
-            {/* Parola */}
             <div>
               <label className="text-xs font-medium mb-2 block" style={{color: '#7a5c63'}}>
                 Parola
@@ -111,6 +120,13 @@ function Login() {
               </div>
             </div>
 
+            {eroare && (
+              <p className="text-xs text-center py-2 px-4 rounded-xl"
+                style={{backgroundColor: '#fdebd0', color: '#d35400'}}>
+                {eroare}
+              </p>
+            )}
+
             <button
               onClick={handleLogin}
               disabled={loading}
@@ -124,6 +140,12 @@ function Login() {
             >
               {loading ? 'Se conecteaza...' : 'Conectare'}
             </button>
+
+            <div className="mt-2 p-3 rounded-xl text-xs" style={{backgroundColor: '#fff8f9', color: '#7a5c63'}}>
+              <p className="font-medium mb-1" style={{color: '#3d1f28'}}>Conturi de test:</p>
+              <p>👔 Admin: admin@salon.ro / admin123</p>
+              <p>👤 Angajat: ana@salon.ro / ana123</p>
+            </div>
           </div>
 
           <p className="text-center text-xs mt-6" style={{color: '#7a5c63'}}>

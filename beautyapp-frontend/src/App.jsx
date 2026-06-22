@@ -8,6 +8,7 @@ import Prezenta from './pages/Prezenta'
 import Departamente from './pages/Departamente'
 import Candidati from './pages/Candidati'
 import Setari from './pages/Setari'
+import Portal from './pages/Portal'
 import Dashboard from './pages/Dashboard'
 import logo from './assets/logo.png'
 
@@ -98,6 +99,7 @@ function App() {
         <Route path="/concedii" element={<Layout><Concedii /></Layout>} />
         <Route path="/candidati" element={<Layout><Candidati /></Layout>} />
         <Route path="/setari" element={<Layout><Setari /></Layout>} />
+        <Route path="/portal" element={<Portal />} />
       </Routes>
     </BrowserRouter>
   )
