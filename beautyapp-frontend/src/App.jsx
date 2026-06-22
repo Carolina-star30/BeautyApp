@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom'
-import { LayoutDashboard, Users, Building2, Clock, DollarSign, Calendar, UserPlus, Settings, LogOut } from 'lucide-react'
+import { LayoutDashboard, Users, Building2, Clock, DollarSign, Calendar, UserPlus, Settings, LogOut, CalendarDays } from 'lucide-react'
 import Login from './pages/Login'
 import Angajati from './pages/Angajati'
 import Concedii from './pages/Concedii'
@@ -11,9 +11,11 @@ import Setari from './pages/Setari'
 import Portal from './pages/Portal'
 import Dashboard from './pages/Dashboard'
 import logo from './assets/logo.png'
+import Programari from './pages/Programari'
 
 const menuItems = [
   { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+  { label: 'Programari', path: '/programari', icon: CalendarDays },
   { label: 'Angajati', path: '/angajati', icon: Users },
   { label: 'Departamente', path: '/departamente', icon: Building2 },
   { label: 'Prezenta', path: '/prezenta', icon: Clock },
@@ -100,6 +102,7 @@ function App() {
         <Route path="/candidati" element={<Layout><Candidati /></Layout>} />
         <Route path="/setari" element={<Layout><Setari /></Layout>} />
         <Route path="/portal" element={<Portal />} />
+        <Route path="/programari" element={<Layout><Programari /></Layout>} />
       </Routes>
     </BrowserRouter>
   )

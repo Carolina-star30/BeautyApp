@@ -1,6 +1,6 @@
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import { LogOut, Calendar, DollarSign, Clock, User } from 'lucide-react'
+import { LogOut, Calendar, DollarSign, Clock, User, Plus } from 'lucide-react'
 import logo from '../assets/logo.png'
 
 function Portal() {
@@ -22,6 +22,11 @@ function Portal() {
     { tip: 'Odihna', start: '2026-07-01', sfarsit: '2026-07-07', zile: 6, status: 'in asteptare' },
     { tip: 'Medical', start: '2026-05-10', sfarsit: '2026-05-12', zile: 2, status: 'aprobat' },
   ]
+
+  const programariMele = [
+  { client: 'Maria Gheorghe', serviciu: 'Masaj relaxare', ora: '09:00', durata: 60, status: 'confirmata' },
+  { client: 'Elena Popa', serviciu: 'Manichiura', ora: '13:00', durata: 60, status: 'in asteptare' },
+]
 
   return (
     <div className="min-h-screen" style={{backgroundColor: '#fff8f9'}}>
@@ -167,6 +172,38 @@ function Portal() {
 
         </div>
       </div>
+
+              {/* Programarile mele azi */}
+<div className="mt-6 bg-white rounded-2xl p-6" style={{boxShadow: '0 4px 20px rgba(201, 116, 138, 0.1)'}}>
+  <div className="flex items-center gap-2 mb-6">
+    <Clock size={20} style={{color: '#c9748a'}} />
+    <h3 className="font-bold text-lg" style={{color: '#3d1f28'}}>Programarile mele azi</h3>
+  </div>
+  <div className="flex flex-col gap-3">
+    {programariMele.map((p, i) => (
+      <div key={i} className="flex items-center gap-4 p-4 rounded-2xl"
+        style={{backgroundColor: '#fff8f9', border: '1px solid #fff0f3'}}>
+        <div className="text-center w-16 flex-shrink-0">
+          <p className="font-bold text-lg" style={{color: '#c9748a'}}>{p.ora}</p>
+          <p className="text-xs" style={{color: '#7a5c63'}}>{p.durata} min</p>
+        </div>
+        <div className="w-1 h-10 rounded-full" style={{backgroundColor: '#ffcad4'}} />
+        <div className="flex-1">
+          <p className="font-medium text-sm" style={{color: '#3d1f28'}}>{p.client}</p>
+          <p className="text-xs mt-0.5" style={{color: '#7a5c63'}}>{p.serviciu}</p>
+        </div>
+        <span className="px-3 py-1 rounded-full text-xs font-medium"
+          style={{
+            backgroundColor: p.status === 'confirmata' ? '#d5f5e3' : '#fff0f3',
+            color: p.status === 'confirmata' ? '#1e8449' : '#c9748a'
+          }}>
+          {p.status}
+        </span>
+      </div>
+    ))}
+  </div>
+</div>
+      
     </div>
   )
 }
