@@ -14,7 +14,7 @@ function Angajati() {
   const [saved, setSaved] = useState(false)
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/employees')
+    axios.get('https://beautyapp-production-4cd1.up.railway.app/api/employees')
       .then(res => { setAngajati(res.data); setLoading(false) })
       .catch(() => setLoading(false))
   }, [])
