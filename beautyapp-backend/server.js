@@ -9,11 +9,7 @@ const asistentRoute = require('./src/routes/asistent')
 const app = express()
 const PORT = process.env.PORT || 5000
 
-app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174', 'https://rainbow-sprite-633770.netlify.app'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}))
+app.use(cors())
 app.use(express.json())
 
 
