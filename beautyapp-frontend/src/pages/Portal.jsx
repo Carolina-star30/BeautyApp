@@ -2,6 +2,7 @@ import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { LogOut, Calendar, DollarSign, Clock, User, Plus } from 'lucide-react'
 import logo from '../assets/logo.png'
+import Asistent from '../components/Asistent'
 
 function Portal() {
   const { user, logout } = useAuth()
@@ -203,6 +204,14 @@ function Portal() {
     ))}
   </div>
 </div>
+
+<Asistent dateAngajat={{
+  nume: user?.nume,
+  soldConcediu: 18,
+  salariuNet: 2176,
+  oreLucrate: 142,
+  programariAzi: 2
+}} />
       
     </div>
   )
